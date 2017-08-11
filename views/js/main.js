@@ -546,7 +546,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Calculating the number of visible pizzas on screen
   var pizzaMax = Math.floor(screen.height / s) * cols;
-
   for (var i = 0; i < pizzaMax; i++) {
     // Copied this line from vargalaszlo1981 from this forum discussion: https://discussions.udacity.com/t/website-optimisation/307410/12
     var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
@@ -558,7 +557,8 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     // Copied this line from vargalaszlo1981 from this forum discussion: https://discussions.udacity.com/t/website-optimisation/307410/12
-    elem.style.left = elem.basicLeft + 100 * phase + 'px';
+    // I deleted "elem.basicLeft +" at the beginning of the right part of the assignment because there were not enough pizzas
+    elem.style.left = 100 * phase + 'px';
 
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
