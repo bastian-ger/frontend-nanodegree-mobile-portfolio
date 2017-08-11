@@ -505,11 +505,21 @@ function updatePositions() {
 
   var items = document.querySelectorAll('.mover');
   var topScroll = document.body.scrollTop;
-  var itemsLength = items.length;
 
-  for (var i = 0; i < itemsLength; i++) {
-    var phase = Math.sin((topScroll / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+  // Calculating phase for all 5 cases of i and putting them into an array
+  // The idea for using an array comes from this forum discussion: https://discussions.udacity.com/t/website-optimisation/307410/12
+  var phase = [];
+
+  for (var p = 0; p < 5; p++) {
+    phase[p] = Math.sin((topScroll / 1250) + p);
+  }
+
+  var lengthOfItems = items.length;
+
+  // The idea for using transform comes from this forum discussion: https://discussions.udacity.com/t/website-optimisation/307410/12
+  for (var i = 0; i < lengthOfItems; i++) {
+    var distance = items[i].basicLeft + 100 * phase[i % 5] + 'px';
+    items[i].style.transform = 'translateX(' + distance + ')';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -520,35 +530,36 @@ function updatePositions() {
     var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
     logAverageFrame(timesToUpdatePosition);
   }
-  ticking = false;
 }
 
 // runs updatePositions on scroll
-// Parts of this code are from: https://www.html5rocks.com/en/tutorials/speed/animations/
-var ticking = false;
+window.addEventListener('scroll', updater);
 
-window.addEventListener('scroll', requestTick);
-
-function requestTick() {
-  if(!ticking) {
-    ticking = true;
-    requestAnimationFrame(updatePositions);
-  }
+function updater() {
+  requestAnimationFrame(updatePositions);
 }
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  var pizzaMax = Math.floor((screen.height) / 256) * 8;
+
+  // Calculating the number of visible pizzas on screen
+  var pizzaMax = Math.floor(screen.height / s) * cols;
 
   for (var i = 0; i < pizzaMax; i++) {
+    // Copied this line from vargalaszlo1981 from this forum discussion: https://discussions.udacity.com/t/website-optimisation/307410/12
+    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
+    // Copied this line from vargalaszlo1981 from this forum discussion: https://discussions.udacity.com/t/website-optimisation/307410/12
+    elem.style.left = elem.basicLeft + 100 * phase + 'px';
+
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
