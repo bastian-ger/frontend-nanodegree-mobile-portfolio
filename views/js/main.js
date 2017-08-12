@@ -518,7 +518,8 @@ function updatePositions() {
 
   // The idea for using transform comes from this forum discussion: https://discussions.udacity.com/t/website-optimisation/307410/12
   for (var i = 0; i < lengthOfItems; i++) {
-    var distance = items[i].basicLeft + 100 * phase[i % 5] + 'px';
+    var distance = 100 * phase[i % 5] + 'px';
+    // Changes the position of each item by distance
     items[i].style.transform = 'translateX(' + distance + ')';
   }
 
@@ -533,11 +534,9 @@ function updatePositions() {
 }
 
 // runs updatePositions on scroll
-window.addEventListener('scroll', updater);
-
-function updater() {
+window.onscroll = function() {
   requestAnimationFrame(updatePositions);
-}
+};
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
@@ -547,18 +546,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // Calculating the number of visible pizzas on screen
   var pizzaMax = Math.floor(screen.height / s) * cols;
   for (var i = 0; i < pizzaMax; i++) {
-    // Copied this line from vargalaszlo1981 from this forum discussion: https://discussions.udacity.com/t/website-optimisation/307410/12
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
-    // Copied this line from vargalaszlo1981 from this forum discussion: https://discussions.udacity.com/t/website-optimisation/307410/12
-    // I deleted "elem.basicLeft +" at the beginning of the right part of the assignment because there were not enough pizzas
-    elem.style.left = 100 * phase + 'px';
+    // Calculating the first position of pizzas
+    elem.style.left = elem.basicLeft + 'px';
 
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
