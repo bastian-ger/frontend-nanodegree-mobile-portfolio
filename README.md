@@ -1,55 +1,69 @@
-## Website Performance Optimization portfolio project
+# Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+## Description:
 
-To get started, check out the repository and inspect the code.
+This is a project of the Front-End Nanodegree of Udacity. The main objectives were to improve the Critical Rendering Path of index.html so that it reaches a minimum PageSpeed score of 90 on mobile and desktop and to improve the fps of pizza.html so that it constantly reaches 60 fps.
 
-### Getting started
+## How to run this:
 
-#### Part 1: Optimize PageSpeed Insights score for index.html
+- Fork a copy of this repo to your account by clicking on "Fork"
+- Click on the "Clone or download" button in your copy of this repo to download the files on your computer
+- Open *index.html* or *views/pizza.html* in your browser
 
-Some useful tips to help you get started:
+## Optimizations in *index.html*:
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+- Applied a Webfontloader for the google fonts in order to make it non-render-blocking
+- Applied *async* on the google analytics script
+- Added a resized version of *pizzeria.jpg* in views/images
+- Optimized images with Grunt Imagemin
+- Inlined CSS with Grunt Critical
+- Minified file
 
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
+## Optimizations in *views/js/main.js*:
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to the top-level of your project directory to make your local server accessible remotely.
+- Took *document.body.scrollTop* out of for-loop in updatePositions() and read this value outside the loop
+- Took the calculation of *items.length* out of the same for-loop and calculated it outside the loop
+- Applied a requestAnimationFrame on updatePositions()
+- Calculated the exact number of visible pizzas before creating the DOM elements
+- Used an array to calculate and save all 5 cases of phase before the for-loop in updatePositions()
+- Used *transform* in order to move the pizzas in updatePositions(). Also had to calculate the first position of elem.style.left for the DOMContentLoaded Eventlistener.
+- Added *will-change: transform* and *backface-visibility: hidden* to *.mover* class in *style.css*
+- Calculated the old pizza width before the for-loop in resizePizzas(size)
+- Calculated the length of *.randomPizzaContainer* before the same loop
+- Calculated *dx* before the same loop and limited calculation to only one *.randomPizzaContainer*
+- Minified file
 
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ./ngrok http 8080
-  ```
+## These are the necessary steps to download, configure and implement the task runner on the reviewer's desktop:
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
-
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
-
-#### Part 2: Optimize Frames per Second in pizza.html
-
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
-
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
-
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
-
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
-
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+-	Install node.js from this website: https://nodejs.org/en/
+-	Install the Grunt command line interface by writing this in Command Prompt: “npm install -g grunt-cli”
+-	Then navigate to the folder of *index.html* in Command Prompt.
+-	Then create a *package.json* file by using the command “npm init”.
+-	Answer the upcoming questions with the help of this website: https://docs.npmjs.com/files/package.json
+-	Next, add Grunt as a developer dependency by using this command in the Command Prompt: “npm install --save-dev grunt”
+-	Create an empty file called *Gruntfile.js*. You can use your text editor for that.
+-	Install the plugin for optimizing images by using the command “npm install --save-dev grunt-contrib-imagemin”.
+-	Load the plugin by writing this command inside the Gruntfile.js: “grunt.loadNpmTasks('grunt-contrib-imagemin');”
+-	See Gruntfile.js for further details on configuration.
+-	Register task in Gruntfile.js with this line: “grunt.registerTask('optimizePICS', ['imagemin']);”
+-	Run task with command: “grunt optimizePICS”.
+-	Install the plugin for inlining above-the-fold CSS by using the command “npm install grunt-critical --save-dev”
+-	Load the plugin by writing this in Gruntfile.js: “grunt.loadNpmTasks('grunt-critical');”
+-	See Gruntfile.js for further details on configuration.
+-	Register task in Gruntfile.js with this line: “grunt.registerTask('criticalCSS', ['critical']);”
+-	Run task with command: “grunt criticalCSS”
+- Install the plugin for minifying html files by using the command "npm install grunt-contrib-htmlmin --save-dev"
+- Load the plugin by writing this in Gruntfile.js: "grunt.loadNpmTasks('grunt-contrib-htmlmin');"
+- See Gruntfile.js for further details on configuration.
+- Register task in Gruntfile.js with this line: "grunt.registerTask('minifyHTML', ['htmlmin']);"
+- Run task with command: "grunt minifyHTML"
+- Install the plugin for minifying css files by using the command "npm install grunt-contrib-cssmin --save-dev"
+- Load the plugin by writing this in Gruntfile.js: "grunt.loadNpmTasks('grunt-contrib-cssmin');"
+- See Gruntfile.js for further details on configuration.
+- Register task with command: "grunt.registerTask('minifyCSS', ['cssmin']);"
+- Run task with command "grunt minifyCSS"
+- Install the plugin for minifying js files by using the command: "npm install grunt-contrib-uglify --save-dev"
+- Load the plugin by writing this in Gruntfile.js: "grunt.loadNpmTasks('grunt-contrib-uglify');"
+- See Gruntfile.js for further details on configuration.
+- Register task in Gruntfile.js with this line: "grunt.registerTask('minifyJS', ['uglify']);"
+- Run task with command "grunt minifyJS"
