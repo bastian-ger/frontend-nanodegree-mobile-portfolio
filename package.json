@@ -1,0 +1,26 @@
+{
+  "name": "webperfproject",
+  "version": "1.0.0",
+  "description": "This is for a Frontend Nanodegree project.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bastian-ger/frontend-nanodegree-mobile-portfolio.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/bastian-ger/frontend-nanodegree-mobile-portfolio/issues"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "^2.2.1",
+    "grunt-contrib-htmlmin": "^2.4.0",
+    "grunt-contrib-imagemin": "^2.0.1",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-critical": "^0.3.0"
+  }
+}
