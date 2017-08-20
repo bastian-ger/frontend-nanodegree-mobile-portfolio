@@ -31,7 +31,6 @@ This is a project of the Front-End Nanodegree of Udacity. The main objectives we
 - Calculated the old pizza width before the for-loop in resizePizzas(size)
 - Calculated the length of *.randomPizzaContainer* before the same loop
 - Calculated *dx* before the same loop and limited calculation to only one *.randomPizzaContainer*
-- Minified file
 
 ## These are the necessary steps to download, configure and implement the task runner on the reviewer's desktop:
 
